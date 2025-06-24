@@ -1,4 +1,4 @@
-package com.example.currencyconverter.ui
+package com.example.currencyconverter.presentation.ui
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
