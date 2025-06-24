@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="currency_eur">Евро</string>
+    <string name="currency_aud">Австралийский Доллар</string>
+    <string name="currency_bgn">Болгарский Лев</string>
+    <string name="currency_brl">Бразильский Реал</string>
+    <string name="currency_cad">Канадский Доллар</string>
+    <string name="currency_chf">Швейцарский Франк</string>
+    <string name="currency_cny">Китайский Юань</string>
+    <string name="currency_czk">Чешская Крона</string>
+    <string name="currency_dkk">Датская Крона</string>
+    <string name="currency_gbp">Британский Фунт</string>
+    <string name="currency_hkd">Гонконгский Доллар</string>
+    <string name="currency_hrk">Хорватская Куна</string>
+    <string name="currency_huf">Венгерский Форинт</string>
+    <string name="currency_idr">Индонезийская Рупия</string>
+    <string name="currency_ils">Израильский Шекель</string>
+    <string name="currency_inr">Индийская Рупия</string>
+    <string name="currency_isk">Исландская Крона</string>
+    <string name="currency_jpy">Японская Йена</string>
+    <string name="currency_krw">Южнокорейская Вона</string>
+    <string name="currency_mxn">Мексиканский Песо</string>
+    <string name="currency_myr">Малайзийский Рингит</string>
+    <string name="currency_nok">Норвежская Крона</string>
+    <string name="currency_nzd">Новозеландский Доллар</string>
+    <string name="currency_php">Филиппинский Песо</string>
+    <string name="currency_pln">Польский Злотый</string>
+    <string name="currency_ron">Румынский Лей</string>
+    <string name="currency_rub">Российский Рубль</string>
+    <string name="currency_sek">Шведская Крона</string>
+    <string name="currency_sgd">Сингапурский Доллар</string>
+    <string name="currency_thb">Тайландский Бат</string>
+    <string name="currency_try">Турецкая Лира</string>
+    <string name="currency_usd">Американский Доллар</string>
+    <string name="currency_zar">Южноафриканский Ранд</string>
+</resources>

@@ -1,0 +1,105 @@
+<resources>
+    <string name="app_name" translatable="false">CurrencyConverter</string>
+
+    <string name="symbol_eur" translatable="false">€</string>
+    <string name="symbol_aud" translatable="false">$</string>
+    <string name="symbol_bgn" translatable="false">лв</string>
+    <string name="symbol_brl" translatable="false">R$</string>
+    <string name="symbol_cad" translatable="false">$</string>
+    <string name="symbol_chf" translatable="false">CHF</string>
+    <string name="symbol_cny" translatable="false">¥</string>
+    <string name="symbol_czk" translatable="false">Kč</string>
+    <string name="symbol_dkk" translatable="false">kr</string>
+    <string name="symbol_gbp" translatable="false">£</string>
+    <string name="symbol_hkd" translatable="false">HK$</string>
+    <string name="symbol_hrk" translatable="false">kn</string>
+    <string name="symbol_huf" translatable="false">Ft</string>
+    <string name="symbol_idr" translatable="false">Rp</string>
+    <string name="symbol_ils" translatable="false">₪</string>
+    <string name="symbol_inr" translatable="false">₹</string>
+    <string name="symbol_isk" translatable="false">kr</string>
+    <string name="symbol_jpy" translatable="false">¥</string>
+    <string name="symbol_krw" translatable="false">₩</string>
+    <string name="symbol_mxn" translatable="false">$</string>
+    <string name="symbol_myr" translatable="false">RM</string>
+    <string name="symbol_nok" translatable="false">kr</string>
+    <string name="symbol_nzd" translatable="false">$</string>
+    <string name="symbol_php" translatable="false">₱</string>
+    <string name="symbol_pln" translatable="false">zł</string>
+    <string name="symbol_ron" translatable="false">lei</string>
+    <string name="symbol_rub" translatable="false">₽</string>
+    <string name="symbol_sek" translatable="false">kr</string>
+    <string name="symbol_sgd" translatable="false">$</string>
+    <string name="symbol_thb" translatable="false">฿</string>
+    <string name="symbol_try" translatable="false">₺</string>
+    <string name="symbol_usd" translatable="false">$</string>
+    <string name="symbol_zar" translatable="false">R</string>
+
+    <string name="code_eur" translatable="false">EUR</string>
+    <string name="code_aud" translatable="false">AUD</string>
+    <string name="code_bgn" translatable="false">BGN</string>
+    <string name="code_brl" translatable="false">BRL</string>
+    <string name="code_cad" translatable="false">CAD</string>
+    <string name="code_chf" translatable="false">CHF</string>
+    <string name="code_cny" translatable="false">CNY</string>
+    <string name="code_czk" translatable="false">CZK</string>
+    <string name="code_dkk" translatable="false">DKK</string>
+    <string name="code_gbp" translatable="false">GBP</string>
+    <string name="code_hkd" translatable="false">HKD</string>
+    <string name="code_hrk" translatable="false">HRK</string>
+    <string name="code_huf" translatable="false">HUF</string>
+    <string name="code_idr" translatable="false">IDR</string>
+    <string name="code_ils" translatable="false">ILS</string>
+    <string name="code_inr" translatable="false">INR</string>
+    <string name="code_isk" translatable="false">ISK</string>
+    <string name="code_jpy" translatable="false">JPY</string>
+    <string name="code_krw" translatable="false">KRW</string>
+    <string name="code_mxn" translatable="false">MXN</string>
+    <string name="code_myr" translatable="false">MYR</string>
+    <string name="code_nok" translatable="false">NOK</string>
+    <string name="code_nzd" translatable="false">NZD</string>
+    <string name="code_php" translatable="false">PHP</string>
+    <string name="code_pln" translatable="false">PLN</string>
+    <string name="code_ron" translatable="false">RON</string>
+    <string name="code_rub" translatable="false">RUB</string>
+    <string name="code_sek" translatable="false">SEK</string>
+    <string name="code_sgd" translatable="false">SGD</string>
+    <string name="code_thb" translatable="false">THB</string>
+    <string name="code_try" translatable="false">TRY</string>
+    <string name="code_usd" translatable="false">USD</string>
+    <string name="code_zar" translatable="false">ZAR</string>
+
+    <string name="currency_eur">Euro</string>
+    <string name="currency_aud">Australia Dollar</string>
+    <string name="currency_bgn">Bulgaria Lev</string>
+    <string name="currency_brl">Brazil Real</string>
+    <string name="currency_cad">Canada Dollar</string>
+    <string name="currency_chf">Switzerland Franc</string>
+    <string name="currency_cny">China Yuan/Renminbi</string>
+    <string name="currency_czk">Czech Koruna</string>
+    <string name="currency_dkk">Denmark Krone</string>
+    <string name="currency_gbp">Great Britain Pound</string>
+    <string name="currency_hkd">Hong Kong Dollar</string>
+    <string name="currency_hrk">Croatia Kuna</string>
+    <string name="currency_huf">Hungary Forint</string>
+    <string name="currency_idr">Indonesia Rupiah</string>
+    <string name="currency_ils">Israel New Shekel</string>
+    <string name="currency_inr">India Rupee</string>
+    <string name="currency_isk">Iceland Krona</string>
+    <string name="currency_jpy">Japan Yen</string>
+    <string name="currency_krw">South Korea Won	</string>
+    <string name="currency_mxn">Mexico Peso</string>
+    <string name="currency_myr">Malaysia Ringgit</string>
+    <string name="currency_nok">Norway Kroner</string>
+    <string name="currency_nzd">New Zealand Dollar</string>
+    <string name="currency_php">Philippines Peso</string>
+    <string name="currency_pln">Poland Zloty</string>
+    <string name="currency_ron">Romania New Lei</string>
+    <string name="currency_rub">Russia Rouble</string>
+    <string name="currency_sek">Sweden Krona</string>
+    <string name="currency_sgd">Singapore Dollar</string>
+    <string name="currency_thb">Thailand Baht</string>
+    <string name="currency_try">Turkish Lira</string>
+    <string name="currency_usd">USA Dollar</string>
+    <string name="currency_zar">South Africa Rand</string>
+</resources>
