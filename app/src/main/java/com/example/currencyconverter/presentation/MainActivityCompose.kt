@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.currencyconverter.presentation.currencies_feature.components.CurrenciesScreen
 import com.example.currencyconverter.presentation.ui.theme.CurrencyConverterTheme
 
 class MainActivityCompose : ComponentActivity() {
@@ -20,28 +21,9 @@ class MainActivityCompose : ComponentActivity() {
         setContent {
             CurrencyConverterTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    CurrenciesScreen()
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CurrencyConverterTheme {
-        Greeting("Android")
     }
 }
