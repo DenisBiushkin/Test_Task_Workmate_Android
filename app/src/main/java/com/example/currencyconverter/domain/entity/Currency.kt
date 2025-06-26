@@ -35,3 +35,7 @@ enum class Currency {
     TRY,
     ZAR,
 }
+fun String.toCurrencyCode(): Currency? =
+    Currency.entries.find { it.name == this }
+
+fun Currency.toRaw(): String = this.name
