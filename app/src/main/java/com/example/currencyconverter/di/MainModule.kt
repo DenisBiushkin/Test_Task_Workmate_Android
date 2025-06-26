@@ -1,13 +1,16 @@
 package com.example.currencyconverter.di
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import com.example.currencyconverter.data.dataSource.room.AppDatabase
 import com.example.currencyconverter.data.dataSource.room.account.dao.AccountDao
 import com.example.currencyconverter.data.dataSource.room.transaction.dao.TransactionDao
+import com.example.currencyconverter.domain.entity.CurrencyMeta
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 

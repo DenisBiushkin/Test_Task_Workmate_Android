@@ -6,6 +6,8 @@ import com.example.currencyconverter.data.dataSource.room.AppDatabase
 import com.example.currencyconverter.data.dataSource.room.account.dao.AccountDao
 import com.example.currencyconverter.data.dataSource.room.transaction.dao.TransactionDao
 import com.example.currencyconverter.domain.usecase.InitializeDefaultAccountUseCase
+import com.example.currencyconverter.util.CurrencyRepository
+import com.example.currencyconverter.util.loadCurrencyMeta
 import dagger.Provides
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
@@ -20,5 +22,9 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        val context = this
+        CoroutineScope(Dispatchers.IO).launch {
+            CurrencyRepository.meta= context.loadCurrencyMeta()
+        }
     }
 }

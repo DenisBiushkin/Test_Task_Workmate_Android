@@ -26,13 +26,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
 import com.example.currencyconverter.R
+import com.example.currencyconverter.presentation.currencies_feature.model.CurrencyUI
 
 @Preview(showBackground = true)
 @Composable
@@ -41,14 +46,14 @@ fun showCurrenciesUiItem(){
     LazyColumn (
         modifier=Modifier.fillMaxSize()
     ){
-        items (10){
-            CurrenciesUiItem()
-        }
+//        items (10){
+//            CurrenciesUiItem()
+//        }
     }
 }
 @Composable
 fun CurrenciesUiItem(
-
+    currencyUI: CurrencyUI
 ){
     Row(
         horizontalArrangement = Arrangement.Start,
@@ -74,9 +79,15 @@ fun CurrenciesUiItem(
             ,
             contentAlignment = Alignment.Center
         ){
+            val painter = rememberAsyncImagePainter(
+                ImageRequest.Builder(LocalContext.current)
+                    .data(currencyUI.svgAssetPath)
+                    .decoderFactory(SvgDecoder.Factory())
+                    .build()
+            )
             Image(
                 //contentScale = ContentScale.Crop,
-                painter = painterResource(R.drawable.test),
+                painter =  painter,
                 contentDescription = "test"
             )
         }
@@ -92,17 +103,17 @@ fun CurrenciesUiItem(
                 )
         ) {
             Text(
-                text = "RUB",
+                text = currencyUI.currency,
                 fontWeight = FontWeight.Bold,
                 fontSize = 14.sp
             )
             Text(
-                text = "Russia ruble",
+                text = currencyUI.name,
                 fontSize = 12.sp
             )
-            if(true){
+            if(currencyUI.showBalance){
                 Text(
-                    text = "Balance: 43000",
+                    text = "Balance: ${currencyUI.symbol}${currencyUI.balance}",
                     fontSize = 12.sp
                 )
             }
@@ -117,18 +128,28 @@ fun CurrenciesUiItem(
             Row (
                 verticalAlignment = Alignment.CenterVertically
             ){
+                val textStyle = TextStyle(
+                    fontSize = 24.sp,
+                    color = Color.Black, // Цвет текста
+                )
+                Text(
+                    text = currencyUI.symbol,
+                    style= textStyle
+                )
                 BasicTextField(
                     modifier = Modifier
                         .widthIn(min= 10.dp)
-                        .padding(16.dp)
+                        .padding(
+                            start = 5.dp,
+                            top = 16.dp,
+                            end = 16.dp,
+                            bottom = 16.dp
+                        )
                         .focusRequester(focusRequester),
-                    value = "24000",
+                    value = currencyUI.amount.toString(),
                     onValueChange = { newValue ->
                     },
-                    textStyle = TextStyle(
-                        fontSize = 24.sp,
-                        color = Color.Black, // Цвет текста
-                    ),
+                    textStyle =textStyle,
                     decorationBox = { innerTextField ->
                         Column(
 
