@@ -6,7 +6,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -56,10 +58,8 @@ fun showCurrenciesUiItem(){
 @Composable
 fun CurrenciesUiItem(
     currencyUI: CurrencyUI,
-    onAmountChange: (String) -> Unit,
-    onClearClick: () -> Unit,
-    onInputClick:()-> Unit,
-    onCurrencyClick: () -> Unit
+    onCurrencyClick: () -> Unit,
+    contentCurrency :@Composable (RowScope.()->Unit)
 ){
     Row(
         horizontalArrangement = Arrangement.Start,
@@ -105,7 +105,7 @@ fun CurrenciesUiItem(
             verticalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxHeight()
-                .fillMaxWidth(0.55f)
+                .fillMaxWidth(0.46f)
                 //  .background(Color.Blue)
                 .padding(
                     start = 6.dp
@@ -129,11 +129,6 @@ fun CurrenciesUiItem(
         }
         val focusRequester = remember { FocusRequester() }
         //focusRequester.freeFocus()
-        CurrencyInputRow(
-            currencyUI = currencyUI,
-            onAmountChange =onAmountChange,
-            onClearClick =  onClearClick,
-            onInputClick =  onInputClick
-        )
+        contentCurrency()
     }
 }

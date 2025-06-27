@@ -99,11 +99,16 @@ fun CurrenciesScreen(
                // index,item->
                 CurrenciesUiItem(
                     currencyUI = it,
-                    onAmountChange =onAmountChange,
-                    onClearClick =  onClearClick,
-                    onInputClick =  onInputClick,
                     onCurrencyClick = {
                         onCurrencyClick(it)
+                    },
+                    contentCurrency = {
+                        CurrencyInputRow(
+                            currencyUI = it,
+                            onAmountChange =onAmountChange,
+                            onClearClick =  onClearClick,
+                            onInputClick =  onInputClick
+                        )
                     }
                 )
             }

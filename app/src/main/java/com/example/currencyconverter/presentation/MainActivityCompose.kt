@@ -8,9 +8,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.rememberNavController
 import com.example.currencyconverter.presentation.currencies_feature.components.CurrenciesScreenFull
 import com.example.currencyconverter.presentation.ui.theme.CurrencyConverterTheme
 import com.example.currencyconverter.domain.entity.CurrencyMeta
+import com.example.currencyconverter.presentation.navigation.NavGraph
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -21,9 +23,7 @@ class MainActivityCompose : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CurrencyConverterTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    CurrenciesScreenFull()
-                }
+                NavGraph(navHostController = rememberNavController())
             }
         }
     }

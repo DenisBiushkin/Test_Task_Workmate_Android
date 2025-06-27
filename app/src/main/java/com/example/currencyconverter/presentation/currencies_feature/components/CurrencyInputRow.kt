@@ -48,6 +48,8 @@ import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.example.currencyconverter.R
 import com.example.currencyconverter.presentation.currencies_feature.model.CurrencyUI
+import java.text.DecimalFormat
+
 @Composable
 fun CurrencyInputRow(
     currencyUI: CurrencyUI,
@@ -55,8 +57,8 @@ fun CurrencyInputRow(
     onClearClick: () -> Unit,
     onInputClick:()-> Unit
 ) {
-
-    var inputValue by remember { mutableStateOf(currencyUI.amount.toString()) }
+    val formatter = DecimalFormat("0.00")
+    var inputValue by remember { mutableStateOf(formatter.format(currencyUI.amount) )}
     val isEditable by rememberUpdatedState(currencyUI.isEditable)
 
     val textStyle = TextStyle(

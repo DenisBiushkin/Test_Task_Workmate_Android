@@ -14,6 +14,7 @@ import com.example.currencyconverter.presentation.currencies_feature.model.Conte
 import com.example.currencyconverter.presentation.currencies_feature.model.CurrenciesVMState
 import com.example.currencyconverter.presentation.currencies_feature.model.CurrencyUI
 import com.example.currencyconverter.util.CurrencyRepository
+import com.example.currencyconverter.util.toCurrencyUI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -83,21 +84,12 @@ class CurrenciesViewModel @Inject constructor(
     }
 
     private fun getCurrencyUI(newRates: List<Rate>):List<CurrencyUI>{
-        val formatter = DecimalFormat("0.00")
         return newRates.map {
-            val strCurrency = it.currencyCode.name
-            val pathSvg = CurrencyRepository.currencyLocaleMap[strCurrency]?:"ru"
 
-            CurrencyUI(
-                currency =strCurrency,
-                name = CurrencyRepository.meta[strCurrency]?.name ?:"Unknown",
-                symbol = CurrencyRepository.meta[strCurrency]?.symbol ?:"Unknown",
-                svgAssetPath = "file:///android_asset/svg/$pathSvg.svg",
+            toCurrencyUI(it,accountsMap).copy(
                 amount =it.rate*state.value.valueCurrency,
-                balance = accountsMap[strCurrency]?.amount ?: 0.0,
-                showBalance = accountsMap[strCurrency]!=null,
                 isEditable = (state.value.selectedCurrency.name==it.currencyCode.name)
-                       && (ContentState.Input == state.value.contentState)
+                        && (ContentState.Input == state.value.contentState)
             )
 
         }.filter {
@@ -146,6 +138,12 @@ class CurrenciesViewModel @Inject constructor(
 
     private fun toExchange(currencyUI: CurrencyUI){
         Log.d(TAG,"Валюта выбрана, вперед за обменом")
+        _state.update {
+           it.copy(
+               accessNavigate = true,
+               fromSelectedCurrency = currencyUI.currency
+           )
+        }
     }
 
     private fun onChangeValueInput(): List<CurrencyUI> {
@@ -182,7 +180,9 @@ class CurrenciesViewModel @Inject constructor(
         }
     }
 
-
-
-
+    fun clearState(){
+        _state.update {
+            CurrenciesVMState()
+        }
+    }
 }
