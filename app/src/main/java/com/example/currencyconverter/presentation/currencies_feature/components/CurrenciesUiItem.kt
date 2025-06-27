@@ -26,9 +26,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -36,6 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
@@ -89,12 +92,16 @@ fun CurrenciesUiItem(
             ,
             contentAlignment = Alignment.Center
         ){
-            val painter = rememberAsyncImagePainter(
-                ImageRequest.Builder(LocalContext.current)
+            val context =LocalContext.current
+            val ded = rememberAsyncImagePainter(
+                ImageRequest.Builder(context)
                     .data(currencyUI.svgAssetPath)
                     .decoderFactory(SvgDecoder.Factory())
                     .build()
             )
+            val painter = remember(currencyUI.svgAssetPath) {
+                ded
+            }
             Image(
                 //contentScale = ContentScale.Crop,
                 painter =  painter,
@@ -134,3 +141,4 @@ fun CurrenciesUiItem(
         contentCurrency()
     }
 }
+

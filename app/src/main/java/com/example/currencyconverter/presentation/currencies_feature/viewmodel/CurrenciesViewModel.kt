@@ -66,10 +66,13 @@ class CurrenciesViewModel @Inject constructor(
             while (isActiveSurvey){
                 val newRates=getRatesUseCase.invokes(
                     baseCurrencyCode = state.value.selectedCurrency,
-                    amount = state.value.valueCurrency
+                    amount = 1.0
                 )
                 val currencyUI=getCurrencyUI(newRates)
-                _state.update { it.copy(currencies = currencyUI) }
+                _state.update { it.copy(
+                    currencies = currencyUI,
+                    isLoading = false
+                ) }
                 delay(1000)
             }
         }
@@ -84,12 +87,12 @@ class CurrenciesViewModel @Inject constructor(
     }
 
     private fun getCurrencyUI(newRates: List<Rate>):List<CurrencyUI>{
-        return newRates.map {
+        val list= newRates.map {
 
             toCurrencyUI(it,accountsMap).copy(
                 amount =it.rate*state.value.valueCurrency,
-                isEditable = (state.value.selectedCurrency.name==it.currencyCode.name)
-                        && (ContentState.Input == state.value.contentState)
+                isEditable = ((state.value.selectedCurrency.name==it.currencyCode.name)
+                        && (ContentState.Input == state.value.contentState))
             )
 
         }.filter {
@@ -102,9 +105,8 @@ class CurrenciesViewModel @Inject constructor(
                 ContentState.List -> { true }
             }
         }
+        return list
     }
-
-
 
     private fun moveItemToTop(code: String, list: List<CurrencyUI>): List<CurrencyUI> {
         var item = list.find { it.currency== code } ?: return list

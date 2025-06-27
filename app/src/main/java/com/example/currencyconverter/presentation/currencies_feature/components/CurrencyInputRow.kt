@@ -57,7 +57,7 @@ fun CurrencyInputRow(
     onClearClick: () -> Unit,
     onInputClick:()-> Unit
 ) {
-    val formatter = DecimalFormat("0.00")
+    val formatter = DecimalFormat("0.0000")
     var inputValue by remember { mutableStateOf(formatter.format(currencyUI.amount) )}
     val isEditable by rememberUpdatedState(currencyUI.isEditable)
 

@@ -72,7 +72,7 @@ fun CurrencyExchangeScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Text(text = "${currencyExchange.toCurrency} to ${currencyExchange.toCurrency}", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                Text(text = "${currencyExchange.fromCurrency} to ${currencyExchange.toCurrency}", fontSize = 20.sp, fontWeight = FontWeight.Bold)
                 Text(text = "${currencyExchange.toSymbol}1 = ${currencyExchange.fromSymbol}${currencyExchange.rate}", fontSize = 16.sp)
             }
 

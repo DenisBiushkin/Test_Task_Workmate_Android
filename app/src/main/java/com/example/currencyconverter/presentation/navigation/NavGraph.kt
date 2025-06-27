@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.currencyconverter.presentation.currencies_feature.components.CurrenciesScreenFull
 import com.example.currencyconverter.presentation.exchange_feature.components.CurrencyExchangeScreenFull
+import com.example.currencyconverter.presentation.transaction_feature.components.TransactionScreenFull
 import com.example.currencyconverter.util.Constans
 
 @Composable
@@ -26,6 +27,7 @@ fun NavGraph(
                 navController =navHostController
             )
         }
+
         composable (
             route = Screens.ExchangeScreen.route,
             arguments = listOf(
@@ -38,12 +40,13 @@ fun NavGraph(
                 navController = navHostController
             )
         }
+
         composable (
             route = Screens.TransactionScreen.route,
         ){
-            Box(){
-
-            }
+            TransactionScreenFull(
+                navController = navHostController
+            )
         }
     }
 }

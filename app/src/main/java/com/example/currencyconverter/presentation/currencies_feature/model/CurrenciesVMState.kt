@@ -8,7 +8,8 @@ data class CurrenciesVMState(
     val fromSelectedCurrency: String = "",
     val valueCurrency: Double = 1.0,
     val contentState: ContentState = ContentState.List,
-    val accessNavigate: Boolean = false
+    val accessNavigate: Boolean = false,
+    val isLoading: Boolean = true
 )
 
 

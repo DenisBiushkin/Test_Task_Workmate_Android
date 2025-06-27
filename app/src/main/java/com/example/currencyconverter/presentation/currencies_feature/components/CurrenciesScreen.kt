@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -44,7 +45,8 @@ fun CurrenciesScreen(
     onAmountChange: (String) -> Unit,
     onClearClick: () -> Unit,
     onInputClick:()-> Unit,
-    onCurrencyClick: (CurrencyUI) -> Unit
+    onCurrencyClick: (CurrencyUI) -> Unit,
+    onTransactionClick: () -> Unit
 ){
 
     Scaffold(
@@ -63,27 +65,26 @@ fun CurrenciesScreen(
                },
                navigationIcon = {},
                actions = {
-                    Icon(
-                        modifier = Modifier.
-                            padding(end = 10.dp)
-                            .size(30.dp),
-                        imageVector = Icons.Default.Menu,
-                        contentDescription = "",
-                        tint = Color.Black
-                    )
+                   IconButton(
+                       onClick = {
+                           onTransactionClick()
+                       }
+                   ) {
+                       Icon(
+                           modifier = Modifier.
+                           padding(end = 10.dp)
+                               .size(30.dp),
+                           imageVector = Icons.Default.Menu,
+                           contentDescription = "",
+                           tint = Color.Black
+                       )
+                   }
+
                }
            )
         },
         bottomBar = {
-            BottomNavigation {
-                BottomNavigationItem(
-                    icon = {  },
-                    label = { Text("") },
-                    selected = true,
-                    onClick = {
-                    }
-                )
-            }
+
         }
     ) {
         paddingValues->
@@ -94,7 +95,7 @@ fun CurrenciesScreen(
         ){
             items(
                 currencyUIList,
-                key = { it.currency }
+                key = { it.amount}
             ){
                // index,item->
                 CurrenciesUiItem(

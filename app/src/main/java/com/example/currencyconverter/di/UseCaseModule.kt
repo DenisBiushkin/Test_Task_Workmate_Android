@@ -22,9 +22,10 @@ object UseCaseModule {
 
     @Provides
     fun provideInitializeDefaultAccountUseCase(
-        accountRepository: AccountRepository
+        accountRepository: AccountRepository,
+        transactionRepository: TransactionRepository
     ): InitializeDefaultAccountUseCase {
-        return InitializeDefaultAccountUseCase(accountRepository)
+        return InitializeDefaultAccountUseCase(accountRepository,transactionRepository)
     }
 
     @Provides
