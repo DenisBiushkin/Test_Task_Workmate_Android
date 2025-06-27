@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.currencyconverter.domain.entity.Account
 import com.example.currencyconverter.domain.entity.Rate
+import com.example.currencyconverter.domain.entity.toCurrencyCode
 import com.example.currencyconverter.domain.usecase.GetAllAccountsUseCase
 import com.example.currencyconverter.domain.usecase.GetRatesUseCase
 import com.example.currencyconverter.domain.usecase.InitializeDefaultAccountUseCase
@@ -49,9 +50,6 @@ class CurrenciesViewModel @Inject constructor(
         initializerBD()
         getAccounts()
         surveyOfCourses()
-        CurrencyRepository.meta.forEach{
-            Log.d(TAG,it.toString())
-        }
     }
 
     private fun initializerBD(){
@@ -69,13 +67,19 @@ class CurrenciesViewModel @Inject constructor(
                     baseCurrencyCode = state.value.selectedCurrency,
                     amount = state.value.valueCurrency
                 )
-
                 val currencyUI=getCurrencyUI(newRates)
-
                 _state.update { it.copy(currencies = currencyUI) }
                 delay(1000)
             }
         }
+    }
+
+    private fun getAccounts(){
+        accountJob?.cancel()
+        accountJob=getAllAccountsUseCase.invoke().onEach {
+                accounts->
+            accountsMap=accounts.map { it.code.name to it }.toMutableStateMap()
+        }.launchIn(viewModelScope)
     }
 
     private fun getCurrencyUI(newRates: List<Rate>):List<CurrencyUI>{
@@ -91,7 +95,9 @@ class CurrenciesViewModel @Inject constructor(
                 svgAssetPath = "file:///android_asset/svg/$pathSvg.svg",
                 amount =it.rate*state.value.valueCurrency,
                 balance = accountsMap[strCurrency]?.amount ?: 0.0,
-                showBalance = accountsMap[strCurrency]!=null
+                showBalance = accountsMap[strCurrency]!=null,
+                isEditable = (state.value.selectedCurrency.name==it.currencyCode.name)
+                       && (ContentState.Input == state.value.contentState)
             )
 
         }.filter {
@@ -106,12 +112,74 @@ class CurrenciesViewModel @Inject constructor(
         }
     }
 
-    private fun getAccounts(){
-        accountJob?.cancel()
-        accountJob=getAllAccountsUseCase.invoke().onEach {
-            accounts->
-            accountsMap=accounts.map { it.code.name to it }.toMutableStateMap()
-        }.launchIn(viewModelScope)
+
+
+    private fun moveItemToTop(code: String, list: List<CurrencyUI>): List<CurrencyUI> {
+        var item = list.find { it.currency== code } ?: return list
+        item=item.copy(isEditable = true)
+        val others = list.filterNot { it.currency == code }
+            .map { it.copy(isEditable = false) }
+        return listOf(item) + others
+    }
+
+    fun onSelectNewCurrency(currencyUI: CurrencyUI){
+        if(currencyUI.currency==state.value.selectedCurrency.name)
+            return
+        when(_state.value.contentState){
+            ContentState.Input -> toExchange(currencyUI)
+            ContentState.List -> toMoveCurrency(currencyUI)
+        }
+    }
+
+    private fun toMoveCurrency(currencyUI: CurrencyUI){
+        //переходить на Enum Currency было ошибка)
+        _state.update {
+            val movedItemList=moveItemToTop(currencyUI.currency,it.currencies)
+            Log.d(TAG,movedItemList.toString())
+            it.copy(
+                currencies =movedItemList,
+                selectedCurrency = currencyUI.currency.toCurrencyCode()!!,
+                valueCurrency = 1.0,
+            )
+        }
+    }
+
+    private fun toExchange(currencyUI: CurrencyUI){
+        Log.d(TAG,"Валюта выбрана, вперед за обменом")
+    }
+
+    private fun onChangeValueInput(): List<CurrencyUI> {
+        return state.value.currencies.map {
+            if(it.currency==state.value.selectedCurrency.name){
+                it.copy(isEditable = false)
+            }else{ it }
+        }
+    }
+
+    fun onChangeValueCurrency(input:String){
+        if(input.toDoubleOrNull() != null){
+            _state.update {
+                it.copy(
+                    valueCurrency = input.toDoubleOrNull()!!,
+                )
+            }
+        }
+    }
+
+    fun onClearInput(){
+        _state.update {
+            it.copy(
+                valueCurrency = 1.0,
+                contentState = ContentState.List,
+                currencies = onChangeValueInput()
+            )
+        }
+    }
+
+    fun onClickToChangeInput(){
+        _state.update {
+            it.copy(contentState = ContentState.Input)
+        }
     }
 
 

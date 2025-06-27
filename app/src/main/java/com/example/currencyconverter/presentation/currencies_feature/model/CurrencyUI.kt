@@ -7,5 +7,6 @@ data class CurrencyUI(
     val amount: Double,
     val svgAssetPath: String,
     val showBalance: Boolean,
-    val balance: Double
+    val balance: Double,
+    val isEditable: Boolean = false,
 )

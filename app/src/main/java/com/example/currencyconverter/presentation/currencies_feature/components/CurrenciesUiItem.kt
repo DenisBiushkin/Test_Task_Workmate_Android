@@ -2,6 +2,7 @@ package com.example.currencyconverter.presentation.currencies_feature.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -37,6 +38,7 @@ import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.example.currencyconverter.R
+import com.example.currencyconverter.domain.entity.Currency
 import com.example.currencyconverter.presentation.currencies_feature.model.CurrencyUI
 
 @Preview(showBackground = true)
@@ -53,7 +55,11 @@ fun showCurrenciesUiItem(){
 }
 @Composable
 fun CurrenciesUiItem(
-    currencyUI: CurrencyUI
+    currencyUI: CurrencyUI,
+    onAmountChange: (String) -> Unit,
+    onClearClick: () -> Unit,
+    onInputClick:()-> Unit,
+    onCurrencyClick: () -> Unit
 ){
     Row(
         horizontalArrangement = Arrangement.Start,
@@ -70,6 +76,9 @@ fun CurrenciesUiItem(
                 color = Color.Blue.copy(alpha = 0.13f)
             )
             .padding(6.dp)
+            .clickable {
+                onCurrencyClick()
+            }
     ) {
         Box(
             modifier = Modifier
@@ -120,47 +129,11 @@ fun CurrenciesUiItem(
         }
         val focusRequester = remember { FocusRequester() }
         //focusRequester.freeFocus()
-
-        Box(
-            modifier = Modifier.fillMaxWidth(),
-            contentAlignment = Alignment.Center
-        ){
-            Row (
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                val textStyle = TextStyle(
-                    fontSize = 24.sp,
-                    color = Color.Black, // Цвет текста
-                )
-                Text(
-                    text = currencyUI.symbol,
-                    style= textStyle
-                )
-                BasicTextField(
-                    modifier = Modifier
-                        .widthIn(min= 10.dp)
-                        .padding(
-                            start = 5.dp,
-                            top = 16.dp,
-                            end = 16.dp,
-                            bottom = 16.dp
-                        )
-                        .focusRequester(focusRequester),
-                    value = currencyUI.amount.toString(),
-                    onValueChange = { newValue ->
-                    },
-                    textStyle =textStyle,
-                    decorationBox = { innerTextField ->
-                        Column(
-
-                        ) {
-                            innerTextField()
-                            HorizontalDivider(color = Color.Black, thickness = 1.dp) // Подчеркивание
-                        }
-                    },
-                )
-                Spacer(modifier= Modifier.width(4.dp))
-            }
-        }
+        CurrencyInputRow(
+            currencyUI = currencyUI,
+            onAmountChange =onAmountChange,
+            onClearClick =  onClearClick,
+            onInputClick =  onInputClick
+        )
     }
 }

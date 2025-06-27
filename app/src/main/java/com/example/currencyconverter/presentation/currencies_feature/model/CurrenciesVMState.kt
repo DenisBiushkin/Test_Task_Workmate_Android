@@ -6,7 +6,7 @@ data class CurrenciesVMState(
     val currencies: List<CurrencyUI> = emptyList(),
     val selectedCurrency: Currency = Currency.USD,
     val valueCurrency: Double = 1.0,
-    val contentState: ContentState = ContentState.Input
+    val contentState: ContentState = ContentState.List,
 )
 
 

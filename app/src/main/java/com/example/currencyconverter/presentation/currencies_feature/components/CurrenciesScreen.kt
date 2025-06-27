@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.icons.Icons
@@ -26,21 +27,24 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import com.example.currencyconverter.presentation.currencies_feature.model.ContentState
 import com.example.currencyconverter.presentation.currencies_feature.model.CurrencyUI
 
 @Preview(showBackground = true)
 @Composable
 fun showCurrenciesScreen(){
-   // CurrenciesScreen()
-    CurrenciesScreen(
-emptyList()
-    )
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CurrenciesScreen(
-    currencyUIList: List<CurrencyUI>
+    contentState: ContentState,
+    currencyUIList: List<CurrencyUI>,
+    onAmountChange: (String) -> Unit,
+    onClearClick: () -> Unit,
+    onInputClick:()-> Unit,
+    onCurrencyClick: (CurrencyUI) -> Unit
 ){
 
     Scaffold(
@@ -52,7 +56,7 @@ fun CurrenciesScreen(
                title = {
                    Text(
                        modifier = Modifier.padding(start = 3.dp),
-                       text = "Валюты",
+                       text = "Валюты:(${contentState.name})",
                        fontWeight = FontWeight.Bold,
                        fontSize = 24.sp
                        )
@@ -81,26 +85,28 @@ fun CurrenciesScreen(
                 )
             }
         }
-
-
     ) {
         paddingValues->
-
-        val painter = rememberAsyncImagePainter(
-            ImageRequest.Builder(LocalContext.current)
-                .data("")
-                .decoderFactory(SvgDecoder.Factory())
-                .build()
-        )
         LazyColumn (
             modifier=Modifier
                 .padding( paddingValues)
                 .fillMaxSize()
         ){
-            items(currencyUIList){
-                CurrenciesUiItem(it)
+            items(
+                currencyUIList,
+                key = { it.currency }
+            ){
+               // index,item->
+                CurrenciesUiItem(
+                    currencyUI = it,
+                    onAmountChange =onAmountChange,
+                    onClearClick =  onClearClick,
+                    onInputClick =  onInputClick,
+                    onCurrencyClick = {
+                        onCurrencyClick(it)
+                    }
+                )
             }
         }
     }
-
 }
