@@ -21,6 +21,7 @@ fun CurrencyExchangeScreenFull(
     val state = viewModel.state.collectAsState()
     if (state.value.accessNavigate){
         navController.navigate(Screens.CurrenciesScreen.route)
+        viewModel.clearState()
     }
     if (state.value.isLoading){
         Box(
@@ -34,7 +35,7 @@ fun CurrencyExchangeScreenFull(
             currencyExchange = state.value.currencyExchange,
             listTransaction = state.value.listTransaction,
             onExchangeClick={
-                viewModel.toExchangeCurrency()
+                viewModel.saveTransaction()
             }
         )
     }

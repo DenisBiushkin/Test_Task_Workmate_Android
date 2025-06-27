@@ -42,6 +42,7 @@ import coil.request.ImageRequest
 import com.example.currencyconverter.R
 import com.example.currencyconverter.domain.entity.Currency
 import com.example.currencyconverter.presentation.currencies_feature.model.CurrencyUI
+import java.text.DecimalFormat
 
 @Preview(showBackground = true)
 @Composable
@@ -120,9 +121,10 @@ fun CurrenciesUiItem(
                 text = currencyUI.name,
                 fontSize = 12.sp
             )
+            val formatter = DecimalFormat("0.00")
             if(currencyUI.showBalance){
                 Text(
-                    text = "Balance: ${currencyUI.symbol}${currencyUI.balance}",
+                    text = "Balance: ${currencyUI.symbol}${formatter.format(currencyUI.balance)}",
                     fontSize = 12.sp
                 )
             }

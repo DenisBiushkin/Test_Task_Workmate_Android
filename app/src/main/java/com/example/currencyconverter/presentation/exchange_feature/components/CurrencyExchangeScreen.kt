@@ -101,7 +101,7 @@ fun CurrencyExchangeScreen(
 //        )
 //
 
-            Button(onClick = { /*TODO*/ }) {
+            Button(onClick = onExchangeClick) {
                 Text(text = "Buy ${currencyExchange.toCurrency} for ${currencyExchange.fromCurrency}")
             }
         }

@@ -7,6 +7,8 @@ import com.example.currencyconverter.domain.usecase.GetAllAccountsUseCase
 import com.example.currencyconverter.domain.usecase.GetAllTransactionsUseCase
 import com.example.currencyconverter.domain.usecase.GetRatesUseCase
 import com.example.currencyconverter.domain.usecase.InitializeDefaultAccountUseCase
+import com.example.currencyconverter.domain.usecase.SaveAccountsUseCase
+import com.example.currencyconverter.domain.usecase.SaveTransactionUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,6 +46,20 @@ object UseCaseModule {
         accountRepository: AccountRepository
     ): GetAllAccountsUseCase {
         return GetAllAccountsUseCase(accountRepository)
+    }
+
+    @Provides
+    fun provideSaveTransactionUseCase(
+        transactionRepository: TransactionRepository
+    ): SaveTransactionUseCase {
+        return SaveTransactionUseCase(transactionRepository)
+    }
+
+    @Provides
+    fun provideSaveAccountsUseCase(
+        accountRepository: AccountRepository
+    ):SaveAccountsUseCase {
+        return SaveAccountsUseCase(accountRepository)
     }
 
 

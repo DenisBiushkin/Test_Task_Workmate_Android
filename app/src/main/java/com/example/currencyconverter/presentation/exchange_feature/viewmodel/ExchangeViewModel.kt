@@ -7,8 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.currencyconverter.domain.entity.Account
 import com.example.currencyconverter.domain.entity.Currency
 import com.example.currencyconverter.domain.entity.Rate
+import com.example.currencyconverter.domain.entity.Transaction
+import com.example.currencyconverter.domain.entity.toCurrencyCode
 import com.example.currencyconverter.domain.usecase.GetAllAccountsUseCase
 import com.example.currencyconverter.domain.usecase.GetRatesUseCase
+import com.example.currencyconverter.domain.usecase.SaveAccountsUseCase
+import com.example.currencyconverter.domain.usecase.SaveTransactionUseCase
 import com.example.currencyconverter.presentation.currencies_feature.model.CurrencyUI
 import com.example.currencyconverter.presentation.exchange_feature.model.CurrencyExchange
 import com.example.currencyconverter.presentation.exchange_feature.model.ExchangeVMState
@@ -28,6 +32,8 @@ class ExchangeViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val getRatesUseCase: GetRatesUseCase,
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
+    private val saveTransactionUseCase: SaveTransactionUseCase,
+    private val saveAccountsUseCase: SaveAccountsUseCase
 ) :ViewModel() {
 
     private var ratesJob : Job? = null
@@ -74,10 +80,8 @@ class ExchangeViewModel @Inject constructor(
             baseCurrencyCode = state.value.toCurrency,
             amount = 1.0
         ).find { it.currencyCode==state.value.fromCurrency }
-        rate?.let {
-                rate->
+        rate?.let { rate->
             _state.update { it.copy(rate=rate) }
-            Log.d("MyTag","rates: $rate")
         }
     }
 
@@ -117,8 +121,38 @@ class ExchangeViewModel @Inject constructor(
             )
         }
     }
+    private fun makeTransactionModel(): Transaction{
+        return  Transaction(
+            from =state.value.fromCurrency,
+            to=state.value.toCurrency,
+            fromAmount =state.value.amount*_state.value.rate.rate,
+            toAmount =  state.value.amount,
+            dateTime = java.time.LocalDateTime.now()
+        )
+    }
+    private fun makeAccountModels():List<Account>{
+        val oldAmount1=accountsMap[state.value.toCurrency.name]?.amount ?: 0.0
+        val oldAmount2=accountsMap[state.value.fromCurrency.name]?.amount ?: 0.0
+          Log.d("MyTag","oldAmount1: $oldAmount2")
+        val account1= Account(_state.value.toCurrency,oldAmount1+state.value.listTransaction.get(0).amount)
+        val account2= Account(state.value.fromCurrency,oldAmount2-state.value.listTransaction.get(1).amount)
+        Log.d("MyTag","account1: ${listOf(account1,account2)}")
+        return listOf(account1,account2)
+    }
 
-    fun toExchangeCurrency(){
+    fun saveTransaction(){
+        viewModelScope.launch {
+            saveTransactionUseCase.invoke(listOf(makeTransactionModel()))
+            saveAccountsUseCase.invoke(makeAccountModels())
+            _state.update {
+                it.copy(accessNavigate = true)
+            }
+        }
+    }
 
+    fun clearState(){
+        _state.update {
+            ExchangeVMState()
+        }
     }
 }
